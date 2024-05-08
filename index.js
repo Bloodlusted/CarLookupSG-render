@@ -10,7 +10,7 @@ const options = {
     genericSleepTime: 1000,
     closeAfterEachRequest: true,
     headless: true,
-    recaptchaKey: "omg"
+    recaptchaKey: "65cf3f9aaa71fecdf656ff40a795f84d"
 };
 
 const supra = new Supra(options);
