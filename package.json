@@ -1,0 +1,13 @@
+{
+  "name": "car-lookup-sg",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "supra.ts": "^0.0.1-beta.15"
+  }
+}
