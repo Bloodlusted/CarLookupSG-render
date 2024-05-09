@@ -10,20 +10,31 @@ const options = {
     genericSleepTime: 1000,
     closeAfterEachRequest: true,
     headless: true,
+    puppeteerLaunchArgs: [
+        '--disable-web-security',
+        '--disable-features=IsolateOrigins,site-per-process',
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-gpu",
+        "--disable-dev-shm-usage",
+        "--no-first-run",
+        "--no-zygote",
+        "--start-fullscreen"
+      ],
     recaptchaKey: "65cf3f9aaa71fecdf656ff40a795f84d"
 };
 
 const supra = new Supra(options);
 
 app.get("/", (req, res) => {
-    res.send("Render running");
+    res.send("Server online");
 });
 
 app.get('/test', async (req, res) => {
     try {
         const browser = await puppeteer.launch({headless: 'new'});
         const page = await browser.newPage();
-        await page.goto('https://www.google.com/');
+        await page.goto('https://vrl.lta.gov.sg/eai/vrl/action/vrl-eSvcLogin?FUNCTION_ID=F0000005TT');
         const title = await page.title();
         await browser.close();
         res.send('Title: ' + title);
@@ -33,7 +44,7 @@ app.get('/test', async (req, res) => {
     }
 });
 
-// Serve HTML form
+
 app.get("/lookup", (req, res) => {
     res.send(`
         <form id="lookupForm" action="/lookup" method="post">
@@ -58,7 +69,7 @@ app.get("/lookup", (req, res) => {
     `);
 });
 
-// Handle form submission
+
 app.post("/lookup", async (req, res) => {
     try {
         let { vehicleNo } = req.body;
@@ -69,8 +80,8 @@ app.post("/lookup", async (req, res) => {
             <h1>Result</h1>
             <p>Vehicle Number: ${vehicleNo}</p>
             <p>Car Make: ${carMake}</p>
-            <p>Road Tax Expiry: ${roadTaxExpiry}</p>
-            <a href="/lookup">Back to Form</a>
+            <p>Road Tax Expiry: ${roadTaxExpiry}</p><br/>
+            <a href="/lookup">Back</a>
         `);
     } catch (error) {
         console.error("An error occurred:", error);
